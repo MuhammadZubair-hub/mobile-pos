@@ -21,7 +21,7 @@ export const CartModal: React.FC<CartModalProps> = ({
   onClose,
   onProceedCheckout,
 }) => {
-  const { items, updateQty, removeItem, clearCart, subtotal, taxAmount, total, itemCount } = useCart();
+  const { items, updateQty, clearCart, subtotal, taxAmount, total, itemCount } = useCart();
 
   return (
     <Modal visible={visible} animationType="slide" transparent>
@@ -30,9 +30,9 @@ export const CartModal: React.FC<CartModalProps> = ({
           {/* Header */}
           <View style={styles.header}>
             <View>
-              <Text style={styles.title}>Mobile Cart</Text>
+              <Text style={styles.title}>Customer Cart</Text>
               <Text style={styles.subTitle}>
-                {itemCount} {itemCount === 1 ? 'item' : 'items'} selected
+                {itemCount} {itemCount === 1 ? 'item' : 'items'} in order
               </Text>
             </View>
 
@@ -53,7 +53,7 @@ export const CartModal: React.FC<CartModalProps> = ({
             {items.length === 0 ? (
               <View style={styles.emptyContainer}>
                 <Text style={styles.emptyText}>Cart is currently empty</Text>
-                <Text style={styles.emptySubText}>Add items from the catalog to start an order.</Text>
+                <Text style={styles.emptySubText}>Add menu items to start taking an order.</Text>
               </View>
             ) : (
               items.map((item) => (
@@ -100,17 +100,17 @@ export const CartModal: React.FC<CartModalProps> = ({
               </View>
               {taxAmount > 0 && (
                 <View style={styles.summaryRow}>
-                  <Text style={styles.summaryLabel}>Estimated Tax</Text>
+                  <Text style={styles.summaryLabel}>Tax</Text>
                   <Text style={styles.summaryVal}>+Rs. {taxAmount.toFixed(0)}</Text>
                 </View>
               )}
               <View style={[styles.summaryRow, styles.totalRow]}>
-                <Text style={styles.totalLabel}>Total Due</Text>
+                <Text style={styles.totalLabel}>Total Payable</Text>
                 <Text style={styles.totalVal}>Rs. {total.toFixed(0)}</Text>
               </View>
 
               <TouchableOpacity style={styles.checkoutBtn} onPress={onProceedCheckout}>
-                <Text style={styles.checkoutBtnText}>Checkout (Rs. {total.toFixed(0)})</Text>
+                <Text style={styles.checkoutBtnText}>Checkout Bill (Rs. {total.toFixed(0)})</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -123,16 +123,16 @@ export const CartModal: React.FC<CartModalProps> = ({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.7)',
+    backgroundColor: 'rgba(0,0,0,0.8)',
     justifyContent: 'flex-end',
   },
   sheet: {
-    backgroundColor: '#0F172A',
+    backgroundColor: '#121212',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     maxHeight: '85%',
     borderTopWidth: 1,
-    borderTopColor: '#334155',
+    borderTopColor: '#262626',
   },
   header: {
     flexDirection: 'row',
@@ -140,16 +140,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#1E293B',
+    borderBottomColor: '#262626',
+    backgroundColor: '#171717',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#F8FAFC',
+    fontWeight: '900',
+    color: '#FFFFFF',
   },
   subTitle: {
     fontSize: 12,
-    color: '#94A3B8',
+    color: '#A1A1AA',
     marginTop: 2,
   },
   headerActions: {
@@ -162,20 +165,20 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   clearBtnText: {
-    color: '#F87171',
+    color: '#EF4444',
     fontSize: 13,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   closeBtn: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: '#1E293B',
+    backgroundColor: '#262626',
     alignItems: 'center',
     justifyContent: 'center',
   },
   closeBtnText: {
-    color: '#94A3B8',
+    color: '#A1A1AA',
     fontSize: 14,
     fontWeight: 'bold',
   },
@@ -188,12 +191,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyText: {
-    color: '#94A3B8',
+    color: '#FFFFFF',
     fontSize: 15,
     fontWeight: 'bold',
   },
   emptySubText: {
-    color: '#64748B',
+    color: '#71717A',
     fontSize: 12,
     marginTop: 4,
   },
@@ -202,7 +205,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#1E293B',
+    borderBottomColor: '#262626',
   },
   itemInfo: {
     flex: 1,
@@ -210,22 +213,24 @@ const styles = StyleSheet.create({
   },
   itemName: {
     fontSize: 13,
-    fontWeight: 'bold',
-    color: '#F8FAFC',
+    fontWeight: '800',
+    color: '#FFFFFF',
   },
   itemUnit: {
     fontSize: 11,
-    color: '#64748B',
+    color: '#A1A1AA',
     marginTop: 2,
     fontFamily: 'monospace',
   },
   qtyRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#1E293B',
+    backgroundColor: '#1E1E1E',
     borderRadius: 8,
     padding: 2,
     marginRight: 10,
+    borderWidth: 1,
+    borderColor: '#2D2D2D',
   },
   qtyBtn: {
     width: 26,
@@ -233,7 +238,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#334155',
+    backgroundColor: '#2D2D2D',
   },
   qtyBtnText: {
     color: '#FFFFFF',
@@ -248,18 +253,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   lineTotal: {
-    width: 65,
+    width: 70,
     textAlign: 'right',
     fontSize: 14,
-    fontWeight: 'bold',
-    color: '#34D399',
+    fontWeight: '900',
+    color: '#FACC15',
     fontFamily: 'monospace',
   },
   footer: {
     padding: 16,
     borderTopWidth: 1,
-    borderTopColor: '#1E293B',
-    backgroundColor: '#0B1120',
+    borderTopColor: '#262626',
+    backgroundColor: '#171717',
   },
   summaryRow: {
     flexDirection: 'row',
@@ -268,40 +273,41 @@ const styles = StyleSheet.create({
   },
   summaryLabel: {
     fontSize: 12,
-    color: '#94A3B8',
+    color: '#A1A1AA',
   },
   summaryVal: {
     fontSize: 12,
-    color: '#F8FAFC',
+    color: '#FFFFFF',
     fontFamily: 'monospace',
+    fontWeight: '600',
   },
   totalRow: {
     marginTop: 6,
     paddingTop: 8,
     borderTopWidth: 1,
-    borderTopColor: '#1E293B',
+    borderTopColor: '#262626',
   },
   totalLabel: {
     fontSize: 15,
-    fontWeight: 'bold',
-    color: '#F8FAFC',
+    fontWeight: '900',
+    color: '#FFFFFF',
   },
   totalVal: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#34D399',
+    fontSize: 20,
+    fontWeight: '900',
+    color: '#FACC15',
     fontFamily: 'monospace',
   },
   checkoutBtn: {
     marginTop: 14,
-    backgroundColor: '#2563EB',
+    backgroundColor: '#FACC15',
     paddingVertical: 14,
     borderRadius: 12,
     alignItems: 'center',
   },
   checkoutBtnText: {
-    color: '#FFFFFF',
+    color: '#000000',
     fontSize: 15,
-    fontWeight: 'bold',
+    fontWeight: '900',
   },
 });

@@ -52,9 +52,9 @@ export const DiscoveryScreen: React.FC = () => {
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       {/* Title */}
       <View style={styles.header}>
-        <Text style={styles.title}>Wi-Fi Desktop POS Connect</Text>
+        <Text style={styles.title}>Wi-Fi Desktop Connect</Text>
         <Text style={styles.subtitle}>
-          Auto-discover your Desktop Host or enter its local IP address manually.
+          Auto-discover your POS terminal on local Wi-Fi or enter LAN IP manually.
         </Text>
       </View>
 
@@ -65,9 +65,9 @@ export const DiscoveryScreen: React.FC = () => {
             <View style={styles.greenDot} />
             <Text style={styles.connectedTitle}>Connected to POS Host</Text>
           </View>
-          <Text style={styles.connectedServerName}>{serverName}</Text>
+          <Text style={styles.connectedServerName}>{serverName || "OCTOPIZZA'S Fast Food"}</Text>
           <Text style={styles.connectedHost}>
-            {serverIp}:{serverPort} (UDP & WebSocket Sync Active)
+            {serverIp}:{serverPort} (Real-time UDP & WS Sync)
           </Text>
 
           <TouchableOpacity style={styles.disconnectBtn} onPress={disconnectServer}>
@@ -81,17 +81,17 @@ export const DiscoveryScreen: React.FC = () => {
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>📡 UDP Auto-Discovery (Port 5001)</Text>
           <View style={styles.listeningBadge}>
-            <Text style={styles.listeningText}>Scanning Wi-Fi...</Text>
+            <Text style={styles.listeningText}>Broadcasting...</Text>
           </View>
         </View>
 
         {discoveredServers.length === 0 ? (
           <View style={styles.noServersBox}>
             <Text style={styles.noServersText}>
-              Listening for beacons from desktop host...
+              Listening for beacon packets from desktop host...
             </Text>
             <Text style={styles.noServersSub}>
-              Ensure Desktop POS is open and your phone is on the same local Wi-Fi router.
+              Ensure Desktop POS app is open and your phone is on the same local Wi-Fi.
             </Text>
           </View>
         ) : (
@@ -117,19 +117,19 @@ export const DiscoveryScreen: React.FC = () => {
 
       {/* Manual Connection Fallback Form */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>⚙️ Manual Connection Fallback</Text>
+        <Text style={styles.sectionTitle}>⚙️ Manual IP Fallback</Text>
         <Text style={styles.sectionSub}>
-          If UDP is blocked by your router's AP isolation, type the Desktop IP shown on your POS screen:
+          If UDP is blocked by your router AP isolation, enter the Desktop IP shown on your POS screen:
         </Text>
 
         <View style={styles.formGroup}>
-          <Text style={styles.label}>Desktop Host Local LAN IP</Text>
+          <Text style={styles.label}>Desktop Host LAN IP</Text>
           <TextInput
             style={styles.input}
             value={inputIp}
             onChangeText={setInputIp}
             placeholder="192.168.1.15"
-            placeholderTextColor="#64748B"
+            placeholderTextColor="#71717A"
             autoCapitalize="none"
             keyboardType="numeric"
           />
@@ -143,19 +143,19 @@ export const DiscoveryScreen: React.FC = () => {
               value={inputPort}
               onChangeText={setInputPort}
               placeholder="5000"
-              placeholderTextColor="#64748B"
+              placeholderTextColor="#71717A"
               keyboardType="number-pad"
             />
           </View>
 
           <View style={[styles.formGroup, { flex: 1, marginLeft: 8 }]}>
-            <Text style={styles.label}>Pairing PIN (API Key)</Text>
+            <Text style={styles.label}>Pairing PIN (Default: 1234)</Text>
             <TextInput
               style={styles.input}
               value={inputPin}
               onChangeText={setInputPin}
               placeholder="1234"
-              placeholderTextColor="#64748B"
+              placeholderTextColor="#71717A"
               keyboardType="number-pad"
             />
           </View>
@@ -169,10 +169,10 @@ export const DiscoveryScreen: React.FC = () => {
           onPress={handleManualConnect}
         >
           {isConnecting ? (
-            <ActivityIndicator color="#FFFFFF" />
+            <ActivityIndicator color="#000000" />
           ) : (
             <Text style={styles.connectBtnText}>
-              {isConnected ? 'Re-Verify Connection' : 'Pair & Connect over Wi-Fi'}
+              {isConnected ? 'Re-Verify Connection' : 'Connect & Sync with Desktop POS'}
             </Text>
           )}
         </TouchableOpacity>
@@ -184,7 +184,7 @@ export const DiscoveryScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0B1120',
+    backgroundColor: '#0A0A0A',
   },
   content: {
     padding: 16,
@@ -195,18 +195,18 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#F8FAFC',
+    fontWeight: '900',
+    color: '#FFFFFF',
   },
   subtitle: {
     fontSize: 12,
-    color: '#94A3B8',
+    color: '#A1A1AA',
     marginTop: 4,
   },
   connectedCard: {
-    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+    backgroundColor: 'rgba(250, 204, 21, 0.08)',
     borderWidth: 1,
-    borderColor: '#10B981',
+    borderColor: '#FACC15',
     borderRadius: 14,
     padding: 16,
     marginBottom: 20,
@@ -220,47 +220,47 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#10B981',
+    backgroundColor: '#FACC15',
     marginRight: 6,
   },
   connectedTitle: {
-    color: '#10B981',
+    color: '#FACC15',
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: '900',
     textTransform: 'uppercase',
   },
   connectedServerName: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '900',
     color: '#FFFFFF',
   },
   connectedHost: {
     fontSize: 12,
-    color: '#94A3B8',
+    color: '#A1A1AA',
     fontFamily: 'monospace',
     marginTop: 2,
   },
   disconnectBtn: {
     marginTop: 12,
-    backgroundColor: '#1E293B',
+    backgroundColor: '#1E1E1E',
     paddingVertical: 8,
     borderRadius: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#333333',
   },
   disconnectBtnText: {
-    color: '#F87171',
-    fontWeight: '600',
+    color: '#EF4444',
+    fontWeight: '700',
     fontSize: 12,
   },
   section: {
-    backgroundColor: '#0F172A',
+    backgroundColor: '#141414',
     borderRadius: 16,
     padding: 16,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: '#1E293B',
+    borderColor: '#262626',
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -270,45 +270,49 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 14,
-    fontWeight: 'bold',
-    color: '#F8FAFC',
+    fontWeight: '900',
+    color: '#FFFFFF',
   },
   sectionSub: {
     fontSize: 11,
-    color: '#94A3B8',
+    color: '#A1A1AA',
     marginBottom: 14,
   },
   listeningBadge: {
-    backgroundColor: 'rgba(59, 130, 246, 0.15)',
+    backgroundColor: 'rgba(250, 204, 21, 0.12)',
+    borderWidth: 1,
+    borderColor: 'rgba(250, 204, 21, 0.3)',
     paddingHorizontal: 8,
     paddingVertical: 3,
     borderRadius: 12,
   },
   listeningText: {
-    color: '#60A5FA',
+    color: '#FACC15',
     fontSize: 10,
-    fontWeight: '600',
+    fontWeight: '800',
   },
   noServersBox: {
-    backgroundColor: '#1E293B',
+    backgroundColor: '#1A1A1A',
     borderRadius: 10,
     padding: 16,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#2D2D2D',
   },
   noServersText: {
-    color: '#94A3B8',
+    color: '#FFFFFF',
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: '700',
     textAlign: 'center',
   },
   noServersSub: {
-    color: '#64748B',
+    color: '#71717A',
     fontSize: 10,
     marginTop: 4,
     textAlign: 'center',
   },
   serverItem: {
-    backgroundColor: '#1E293B',
+    backgroundColor: '#1A1A1A',
     borderRadius: 12,
     padding: 12,
     flexDirection: 'row',
@@ -316,29 +320,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 8,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#333333',
   },
   serverName: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: '900',
     color: '#FFFFFF',
   },
   serverIp: {
     fontSize: 12,
-    color: '#60A5FA',
+    color: '#FACC15',
     fontFamily: 'monospace',
     marginTop: 2,
   },
   selectBadge: {
-    backgroundColor: '#2563EB',
+    backgroundColor: '#FACC15',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 8,
   },
   selectBadgeText: {
-    color: '#FFFFFF',
+    color: '#000000',
     fontSize: 11,
-    fontWeight: 'bold',
+    fontWeight: '900',
   },
   formGroup: {
     marginBottom: 12,
@@ -348,14 +352,14 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 11,
-    color: '#94A3B8',
+    color: '#A1A1AA',
     marginBottom: 6,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   input: {
-    backgroundColor: '#1E293B',
+    backgroundColor: '#1A1A1A',
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#333333',
     borderRadius: 10,
     color: '#FFFFFF',
     paddingHorizontal: 12,
@@ -364,23 +368,23 @@ const styles = StyleSheet.create({
     fontFamily: 'monospace',
   },
   errorText: {
-    color: '#F87171',
+    color: '#EF4444',
     fontSize: 12,
     marginBottom: 10,
   },
   connectBtn: {
-    backgroundColor: '#2563EB',
+    backgroundColor: '#FACC15',
     borderRadius: 12,
     paddingVertical: 14,
     alignItems: 'center',
     marginTop: 6,
   },
   connectBtnDisabled: {
-    backgroundColor: '#334155',
+    backgroundColor: '#262626',
   },
   connectBtnText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
+    color: '#000000',
+    fontWeight: '900',
     fontSize: 14,
   },
 });

@@ -5,7 +5,6 @@ import {
   StyleSheet,
   FlatList,
   RefreshControl,
-  TouchableOpacity,
 } from 'react-native';
 import { useServer } from '../context/ServerContext';
 import { Order } from '../types';
@@ -64,7 +63,7 @@ export const DashboardScreen: React.FC = () => {
       <View style={styles.liveBanner}>
         <View style={[styles.liveDot, isConnected && styles.liveDotActive]} />
         <Text style={styles.liveBannerText}>
-          {isConnected ? 'LIVE WEBSOCKET FEED (REAL-TIME SYNC)' : 'OFFLINE / DISCONNECTED'}
+          {isConnected ? 'LIVE LOCAL WI-FI WEBSOCKET SYNC' : 'OFFLINE / NOT CONNECTED'}
         </Text>
       </View>
 
@@ -81,12 +80,12 @@ export const DashboardScreen: React.FC = () => {
         </View>
 
         <View style={styles.kpiCard}>
-          <Text style={styles.kpiLabel}>Total Orders</Text>
-          <Text style={[styles.kpiValue, { color: '#60A5FA' }]}>
+          <Text style={styles.kpiLabel}>Total Bills</Text>
+          <Text style={[styles.kpiValue, { color: '#FFFFFF' }]}>
             {salesSummary?.orderCount || 0}
           </Text>
           <Text style={styles.kpiSub}>
-            📱 {salesSummary?.mobileOrders || 0} Mobile / 🖥️ {salesSummary?.desktopOrders || 0} PC
+            📱 {salesSummary?.mobileOrders || 0} Mobile / 🖥️ {salesSummary?.desktopOrders || 0} POS
           </Text>
         </View>
       </View>
@@ -94,13 +93,13 @@ export const DashboardScreen: React.FC = () => {
       {/* Payment breakdown pill row */}
       <View style={styles.breakdownRow}>
         <View style={styles.breakdownItem}>
-          <Text style={styles.breakdownLabel}>💵 Cash Sales:</Text>
+          <Text style={styles.breakdownLabel}>💵 Cash:</Text>
           <Text style={styles.breakdownVal}>
             Rs. {(salesSummary?.cashRevenue || 0).toFixed(0)}
           </Text>
         </View>
         <View style={styles.breakdownItem}>
-          <Text style={styles.breakdownLabel}>💳 Card Sales:</Text>
+          <Text style={styles.breakdownLabel}>💳 Card:</Text>
           <Text style={styles.breakdownVal}>
             Rs. {(salesSummary?.cardRevenue || 0).toFixed(0)}
           </Text>
@@ -109,8 +108,8 @@ export const DashboardScreen: React.FC = () => {
 
       {/* Recent Orders List */}
       <View style={styles.listHeader}>
-        <Text style={styles.listTitle}>Live Order Stream</Text>
-        <Text style={styles.listSub}>{orders.length} transactions recorded</Text>
+        <Text style={styles.listTitle}>Real-Time Order Feed</Text>
+        <Text style={styles.listSub}>{orders.length} orders logged</Text>
       </View>
 
       <FlatList
@@ -119,13 +118,13 @@ export const DashboardScreen: React.FC = () => {
         renderItem={renderOrderItem}
         contentContainerStyle={styles.listContent}
         refreshControl={
-          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} tintColor="#3B82F6" />
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} tintColor="#FACC15" />
         }
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Text style={styles.emptyText}>No transactions recorded yet today.</Text>
+            <Text style={styles.emptyText}>No orders recorded yet today.</Text>
             <Text style={styles.emptySub}>
-              Orders placed from Desktop or Mobile will stream in real-time.
+              Orders placed from Desktop POS or Mobile will appear here in real time.
             </Text>
           </View>
         }
@@ -137,31 +136,31 @@ export const DashboardScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0B1120',
+    backgroundColor: '#0A0A0A',
   },
   liveBanner: {
-    backgroundColor: '#0F172A',
+    backgroundColor: '#121212',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 8,
     borderBottomWidth: 1,
-    borderBottomColor: '#1E293B',
+    borderBottomColor: '#262626',
   },
   liveDot: {
     width: 7,
     height: 7,
     borderRadius: 4,
-    backgroundColor: '#64748B',
+    backgroundColor: '#71717A',
     marginRight: 8,
   },
   liveDotActive: {
-    backgroundColor: '#10B981',
+    backgroundColor: '#FACC15',
   },
   liveBannerText: {
-    color: '#94A3B8',
+    color: '#A1A1AA',
     fontSize: 10,
-    fontWeight: 'bold',
+    fontWeight: '800',
     letterSpacing: 0.5,
   },
   kpiContainer: {
@@ -171,28 +170,28 @@ const styles = StyleSheet.create({
   },
   kpiCard: {
     flex: 1,
-    backgroundColor: '#1E293B',
+    backgroundColor: '#141414',
     borderRadius: 14,
     padding: 14,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#262626',
   },
   kpiLabel: {
     fontSize: 11,
-    color: '#94A3B8',
+    color: '#A1A1AA',
     textTransform: 'uppercase',
-    fontWeight: '600',
+    fontWeight: '700',
   },
   kpiValue: {
     fontSize: 22,
-    fontWeight: 'bold',
-    color: '#34D399',
+    fontWeight: '900',
+    color: '#FACC15',
     fontFamily: 'monospace',
     marginVertical: 4,
   },
   kpiSub: {
     fontSize: 10,
-    color: '#64748B',
+    color: '#71717A',
   },
   breakdownRow: {
     flexDirection: 'row',
@@ -203,22 +202,22 @@ const styles = StyleSheet.create({
   breakdownItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#0F172A',
+    backgroundColor: '#141414',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#1E293B',
+    borderColor: '#262626',
   },
   breakdownLabel: {
     fontSize: 11,
-    color: '#94A3B8',
+    color: '#A1A1AA',
     marginRight: 6,
   },
   breakdownVal: {
     fontSize: 12,
-    fontWeight: 'bold',
-    color: '#F8FAFC',
+    fontWeight: '900',
+    color: '#FFFFFF',
     fontFamily: 'monospace',
   },
   listHeader: {
@@ -228,28 +227,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderTopWidth: 1,
-    borderTopColor: '#1E293B',
+    borderTopColor: '#262626',
   },
   listTitle: {
     fontSize: 14,
-    fontWeight: 'bold',
-    color: '#F8FAFC',
+    fontWeight: '900',
+    color: '#FFFFFF',
   },
   listSub: {
     fontSize: 11,
-    color: '#64748B',
+    color: '#71717A',
   },
   listContent: {
     paddingHorizontal: 16,
     paddingBottom: 30,
   },
   orderCard: {
-    backgroundColor: '#1E293B',
+    backgroundColor: '#141414',
     borderRadius: 12,
     padding: 12,
     marginVertical: 4,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#262626',
   },
   orderTop: {
     flexDirection: 'row',
@@ -259,13 +258,13 @@ const styles = StyleSheet.create({
   },
   invoiceNo: {
     fontSize: 13,
-    fontWeight: 'bold',
-    color: '#F8FAFC',
+    fontWeight: '900',
+    color: '#FFFFFF',
     fontFamily: 'monospace',
   },
   orderTime: {
     fontSize: 10,
-    color: '#64748B',
+    color: '#71717A',
     marginTop: 2,
   },
   badgeRow: {
@@ -278,48 +277,48 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   desktopBadge: {
-    backgroundColor: 'rgba(59, 130, 246, 0.15)',
+    backgroundColor: '#262626',
   },
   mobileBadge: {
-    backgroundColor: 'rgba(6, 182, 212, 0.15)',
+    backgroundColor: 'rgba(250, 204, 21, 0.15)',
   },
   sourceText: {
     fontSize: 9,
-    fontWeight: 'bold',
+    fontWeight: '900',
   },
   desktopText: {
-    color: '#60A5FA',
+    color: '#FFFFFF',
   },
   mobileText: {
-    color: '#22D3EE',
+    color: '#FACC15',
   },
   methodBadge: {
-    backgroundColor: '#0F172A',
+    backgroundColor: '#1E1E1E',
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 4,
   },
   methodText: {
-    color: '#94A3B8',
+    color: '#A1A1AA',
     fontSize: 9,
-    fontWeight: 'bold',
+    fontWeight: '700',
   },
   orderBottom: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     borderTopWidth: 1,
-    borderTopColor: '#334155',
+    borderTopColor: '#262626',
     paddingTop: 6,
   },
   itemCount: {
     fontSize: 11,
-    color: '#94A3B8',
+    color: '#A1A1AA',
   },
   orderTotal: {
     fontSize: 15,
-    fontWeight: 'bold',
-    color: '#34D399',
+    fontWeight: '900',
+    color: '#FACC15',
     fontFamily: 'monospace',
   },
   emptyContainer: {
@@ -327,12 +326,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyText: {
-    color: '#94A3B8',
+    color: '#FFFFFF',
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   emptySub: {
-    color: '#64748B',
+    color: '#71717A',
     fontSize: 11,
     marginTop: 4,
     textAlign: 'center',

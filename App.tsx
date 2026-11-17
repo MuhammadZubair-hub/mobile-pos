@@ -12,7 +12,7 @@ const MainApp: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="light-content" backgroundColor="#0F172A" />
+      <StatusBar barStyle="light-content" backgroundColor="#0A0A0A" />
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
       <View style={styles.content}>
         {activeTab === 'pos' && <POSScreen />}
@@ -36,10 +36,10 @@ export default function App() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#0F172A',
+    backgroundColor: '#0A0A0A',
   },
   content: {
     flex: 1,
-    backgroundColor: '#0B1120',
+    backgroundColor: '#0A0A0A',
   },
 });

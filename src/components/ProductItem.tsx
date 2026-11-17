@@ -16,7 +16,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({ product, onAdd }) => {
       <View style={styles.infoCol}>
         <View style={styles.categoryRow}>
           <Text style={styles.categoryBadge}>
-            {product.category_name || 'General'}
+            {product.category_name || 'Fast Food'}
           </Text>
           {isOutOfStock ? (
             <Text style={styles.outOfStock}>Out of stock</Text>
@@ -41,7 +41,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({ product, onAdd }) => {
           disabled={isOutOfStock}
           onPress={() => onAdd(product)}
         >
-          <Text style={styles.addButtonText}>+ Add</Text>
+          <Text style={[styles.addButtonText, isOutOfStock && styles.addButtonTextDisabled]}>+ Add</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -50,16 +50,16 @@ export const ProductItem: React.FC<ProductItemProps> = ({ product, onAdd }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#1E293B',
+    backgroundColor: '#141414',
     borderRadius: 14,
     padding: 12,
-    marginVertical: 5,
+    marginVertical: 4,
     marginHorizontal: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#262626',
   },
   infoCol: {
     flex: 1,
@@ -72,10 +72,12 @@ const styles = StyleSheet.create({
   },
   categoryBadge: {
     fontSize: 10,
-    fontWeight: 'bold',
+    fontWeight: '800',
     textTransform: 'uppercase',
-    color: '#60A5FA',
-    backgroundColor: 'rgba(59, 130, 246, 0.15)',
+    color: '#FACC15',
+    backgroundColor: 'rgba(250, 204, 21, 0.12)',
+    borderWidth: 1,
+    borderColor: 'rgba(250, 204, 21, 0.25)',
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 4,
@@ -83,27 +85,27 @@ const styles = StyleSheet.create({
   },
   outOfStock: {
     fontSize: 10,
-    color: '#F87171',
-    fontWeight: '600',
+    color: '#EF4444',
+    fontWeight: '700',
   },
   lowStock: {
     fontSize: 10,
-    color: '#FBBF24',
-    fontWeight: '600',
+    color: '#FACC15',
+    fontWeight: '700',
   },
   inStock: {
     fontSize: 10,
-    color: '#94A3B8',
+    color: '#71717A',
   },
   name: {
     fontSize: 14,
-    fontWeight: 'bold',
-    color: '#F8FAFC',
+    fontWeight: '800',
+    color: '#FFFFFF',
     lineHeight: 18,
   },
   sku: {
     fontSize: 10,
-    color: '#64748B',
+    color: '#71717A',
     fontFamily: 'monospace',
     marginTop: 2,
   },
@@ -113,23 +115,26 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#34D399',
+    fontWeight: '900',
+    color: '#FACC15',
     marginBottom: 6,
     fontFamily: 'monospace',
   },
   addButton: {
-    backgroundColor: '#2563EB',
+    backgroundColor: '#FACC15',
     paddingHorizontal: 14,
     paddingVertical: 6,
     borderRadius: 8,
   },
   addButtonDisabled: {
-    backgroundColor: '#334155',
+    backgroundColor: '#262626',
   },
   addButtonText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
+    color: '#000000',
+    fontWeight: '900',
     fontSize: 12,
+  },
+  addButtonTextDisabled: {
+    color: '#71717A',
   },
 });

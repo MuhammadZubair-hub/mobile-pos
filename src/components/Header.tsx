@@ -15,16 +15,16 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
       {/* Top row */}
       <View style={styles.topRow}>
         <View>
-          <Text style={styles.title}>{serverName || 'Mobile POS'}</Text>
+          <Text style={styles.title}>OCTOPIZZA'S</Text>
           <View style={styles.statusRow}>
             <View
               style={[
                 styles.dot,
-                { backgroundColor: isConnected ? '#10B981' : '#F59E0B' },
+                { backgroundColor: isConnected ? '#FACC15' : '#71717A' },
               ]}
             />
             <Text style={styles.subtitle}>
-              {isConnected ? `Synced to ${serverIp}:5000` : 'Not Connected'}
+              {isConnected ? `Local Host: ${serverIp}:5000` : 'Not Connected'}
             </Text>
           </View>
         </View>
@@ -34,7 +34,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
           onPress={() => setActiveTab('connect')}
         >
           <Text style={[styles.connectBadgeText, isConnected ? styles.connectedText : styles.disconnectedText]}>
-            {isConnected ? 'Wi-Fi: Connected' : 'Connect POS'}
+            {isConnected ? 'Wi-Fi: Connected' : 'Connect Host'}
           </Text>
         </TouchableOpacity>
       </View>
@@ -46,7 +46,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
           onPress={() => setActiveTab('pos')}
         >
           <Text style={[styles.tabText, activeTab === 'pos' && styles.activeTabText]}>
-            Catalog / Sale
+            Menu & Sale
           </Text>
         </TouchableOpacity>
 
@@ -55,7 +55,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
           onPress={() => setActiveTab('dashboard')}
         >
           <Text style={[styles.tabText, activeTab === 'dashboard' && styles.activeTabText]}>
-            Live Dashboard
+            Live Orders
           </Text>
         </TouchableOpacity>
 
@@ -64,7 +64,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
           onPress={() => setActiveTab('connect')}
         >
           <Text style={[styles.tabText, activeTab === 'connect' && styles.activeTabText]}>
-            Wi-Fi Setup
+            Wi-Fi Sync
           </Text>
         </TouchableOpacity>
       </View>
@@ -74,9 +74,9 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#0F172A',
+    backgroundColor: '#0A0A0A',
     borderBottomWidth: 1,
-    borderBottomColor: '#1E293B',
+    borderBottomColor: '#262626',
     paddingTop: 12,
     paddingHorizontal: 16,
     paddingBottom: 4,
@@ -88,9 +88,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#F8FAFC',
+    fontSize: 19,
+    fontWeight: '900',
+    color: '#FFFFFF',
+    letterSpacing: 0.5,
   },
   statusRow: {
     flexDirection: 'row',
@@ -105,7 +106,8 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 11,
-    color: '#94A3B8',
+    color: '#A1A1AA',
+    fontFamily: 'monospace',
   },
   connectBadge: {
     paddingHorizontal: 10,
@@ -114,27 +116,27 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   connectedBadge: {
-    backgroundColor: 'rgba(16, 185, 129, 0.1)',
-    borderColor: 'rgba(16, 185, 129, 0.3)',
+    backgroundColor: 'rgba(250, 204, 21, 0.12)',
+    borderColor: 'rgba(250, 204, 21, 0.4)',
   },
   disconnectedBadge: {
-    backgroundColor: 'rgba(245, 158, 11, 0.1)',
-    borderColor: 'rgba(245, 158, 11, 0.3)',
+    backgroundColor: '#181818',
+    borderColor: '#333333',
   },
   connectBadgeText: {
     fontSize: 11,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   connectedText: {
-    color: '#10B981',
+    color: '#FACC15',
   },
   disconnectedText: {
-    color: '#F59E0B',
+    color: '#A1A1AA',
   },
   tabBar: {
     flexDirection: 'row',
     borderTopWidth: 1,
-    borderTopColor: '#1E293B',
+    borderTopColor: '#262626',
     paddingTop: 6,
   },
   tab: {
@@ -144,14 +146,15 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   activeTab: {
-    backgroundColor: '#1E293B',
+    backgroundColor: '#FACC15',
   },
   tabText: {
     fontSize: 12,
-    fontWeight: '600',
-    color: '#64748B',
+    fontWeight: '700',
+    color: '#A1A1AA',
   },
   activeTabText: {
-    color: '#3B82F6',
+    color: '#000000',
+    fontWeight: '900',
   },
 });

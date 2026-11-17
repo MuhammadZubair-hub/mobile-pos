@@ -25,7 +25,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   onClose,
   onSuccess,
 }) => {
-  const { items, subtotal, taxAmount, total, clearCart } = useCart();
+  const { items, taxAmount, total, clearCart } = useCart();
   const { submitOrder } = useServer();
 
   const [paymentMethod, setPaymentMethod] = useState<'CASH' | 'CARD'>('CASH');
@@ -39,7 +39,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   const handleSubmit = async () => {
     if (!isSufficient) {
-      Alert.alert('Insufficient Tender', `Tendered amount must be at least Rs. ${total.toFixed(0)}`);
+      Alert.alert('Insufficient Cash', `Tendered cash must be at least Rs. ${total.toFixed(0)}`);
       return;
     }
 
@@ -103,7 +103,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 {paymentMethod === 'CASH' && (
                   <View style={styles.row}>
                     <Text style={styles.detailLabel}>Change Due:</Text>
-                    <Text style={[styles.detailValue, { color: '#34D399' }]}>
+                    <Text style={[styles.detailValue, { color: '#FACC15' }]}>
                       Rs. {changeDue.toFixed(0)}
                     </Text>
                   </View>
@@ -111,21 +111,21 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               </View>
 
               <TouchableOpacity style={styles.doneBtn} onPress={handleFinish}>
-                <Text style={styles.doneBtnText}>New Mobile Sale</Text>
+                <Text style={styles.doneBtnText}>New Mobile Order</Text>
               </TouchableOpacity>
             </View>
           ) : (
             /* Checkout Form */
             <View>
               <View style={styles.header}>
-                <Text style={styles.title}>Mobile Checkout</Text>
+                <Text style={styles.title}>Mobile Bill Checkout</Text>
                 <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
                   <Text style={styles.closeBtnText}>✕</Text>
                 </TouchableOpacity>
               </View>
 
               <View style={styles.amountBox}>
-                <Text style={styles.amountLabel}>Total Due</Text>
+                <Text style={styles.amountLabel}>Total Payable</Text>
                 <Text style={styles.amountVal}>Rs. {total.toFixed(0)}</Text>
               </View>
 
@@ -145,7 +145,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   onPress={() => setPaymentMethod('CARD')}
                 >
                   <Text style={[styles.methodText, paymentMethod === 'CARD' && styles.methodTextActive]}>
-                    💳 Card / Online
+                    💳 Card / Machine
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -155,9 +155,9 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   <Text style={styles.inputLabel}>Tendered Cash (Rs.)</Text>
                   <TextInput
                     style={styles.input}
-                    keyboardType="decimal-pad"
+                    keyboardType="numeric"
                     placeholder={total.toFixed(0)}
-                    placeholderTextColor="#64748B"
+                    placeholderTextColor="#71717A"
                     value={tenderedInput}
                     onChangeText={setTenderedInput}
                   />
@@ -175,9 +175,9 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 onPress={handleSubmit}
               >
                 {isSubmitting ? (
-                  <ActivityIndicator color="#FFFFFF" />
+                  <ActivityIndicator color="#000000" />
                 ) : (
-                  <Text style={styles.submitBtnText}>Submit Mobile Order</Text>
+                  <Text style={styles.submitBtnText}>Submit Order to POS</Text>
                 )}
               </TouchableOpacity>
             </View>
@@ -191,15 +191,15 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.8)',
+    backgroundColor: 'rgba(0,0,0,0.85)',
     justifyContent: 'center',
     padding: 20,
   },
   dialog: {
-    backgroundColor: '#0F172A',
+    backgroundColor: '#121212',
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#262626',
     padding: 20,
   },
   header: {
@@ -210,33 +210,35 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#F8FAFC',
+    fontWeight: '900',
+    color: '#FFFFFF',
   },
   closeBtn: {
     padding: 6,
   },
   closeBtnText: {
-    color: '#94A3B8',
+    color: '#A1A1AA',
     fontSize: 16,
   },
   amountBox: {
-    backgroundColor: '#1E293B',
+    backgroundColor: '#181818',
     borderRadius: 14,
     padding: 16,
     alignItems: 'center',
     marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#262626',
   },
   amountLabel: {
     fontSize: 12,
-    color: '#94A3B8',
+    color: '#A1A1AA',
     textTransform: 'uppercase',
-    fontWeight: '600',
+    fontWeight: '700',
   },
   amountVal: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#34D399',
+    fontSize: 30,
+    fontWeight: '900',
+    color: '#FACC15',
     fontFamily: 'monospace',
     marginTop: 4,
   },
@@ -248,43 +250,47 @@ const styles = StyleSheet.create({
   methodBtn: {
     flex: 1,
     paddingVertical: 12,
-    backgroundColor: '#1E293B',
+    backgroundColor: '#181818',
     borderRadius: 10,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#262626',
   },
   methodBtnActive: {
-    backgroundColor: 'rgba(59, 130, 246, 0.2)',
-    borderColor: '#3B82F6',
+    backgroundColor: '#FACC15',
+    borderColor: '#FACC15',
   },
   methodText: {
-    color: '#94A3B8',
-    fontWeight: 'bold',
+    color: '#A1A1AA',
+    fontWeight: '800',
     fontSize: 14,
   },
   methodTextActive: {
-    color: '#60A5FA',
+    color: '#000000',
   },
   cashBox: {
-    backgroundColor: '#1E293B',
+    backgroundColor: '#181818',
     borderRadius: 12,
     padding: 12,
     marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#262626',
   },
   inputLabel: {
-    color: '#94A3B8',
+    color: '#A1A1AA',
     fontSize: 11,
     marginBottom: 6,
+    fontWeight: '600',
   },
   input: {
-    backgroundColor: '#0F172A',
+    backgroundColor: '#0A0A0A',
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#333333',
     borderRadius: 8,
     color: '#FFFFFF',
     padding: 10,
-    fontSize: 16,
+    fontSize: 18,
+    fontWeight: '900',
     fontFamily: 'monospace',
   },
   changeRow: {
@@ -294,27 +300,27 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   changeLabel: {
-    color: '#94A3B8',
+    color: '#A1A1AA',
     fontSize: 13,
   },
   changeVal: {
-    color: '#34D399',
-    fontSize: 16,
-    fontWeight: 'bold',
+    color: '#FACC15',
+    fontSize: 18,
+    fontWeight: '900',
     fontFamily: 'monospace',
   },
   submitBtn: {
-    backgroundColor: '#10B981',
+    backgroundColor: '#FACC15',
     paddingVertical: 14,
     borderRadius: 12,
     alignItems: 'center',
   },
   submitBtnDisabled: {
-    backgroundColor: '#334155',
+    backgroundColor: '#262626',
   },
   submitBtnText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
+    color: '#000000',
+    fontWeight: '900',
     fontSize: 15,
   },
   successContainer: {
@@ -325,39 +331,42 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: '#10B981',
+    backgroundColor: '#FACC15',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 12,
   },
   checkIcon: {
-    color: '#FFFFFF',
-    fontSize: 28,
-    fontWeight: 'bold',
+    color: '#000000',
+    fontSize: 30,
+    fontWeight: '900',
   },
   successTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#F8FAFC',
+    fontSize: 22,
+    fontWeight: '900',
+    color: '#FFFFFF',
   },
   invoiceNo: {
     fontSize: 14,
     fontFamily: 'monospace',
-    color: '#60A5FA',
+    color: '#FACC15',
+    fontWeight: 'bold',
     marginTop: 4,
   },
   successSub: {
     fontSize: 11,
-    color: '#94A3B8',
+    color: '#A1A1AA',
     marginTop: 4,
   },
   successDetails: {
     width: '100%',
-    backgroundColor: '#1E293B',
+    backgroundColor: '#181818',
     borderRadius: 12,
     padding: 14,
     marginTop: 16,
     marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#262626',
   },
   row: {
     flexDirection: 'row',
@@ -365,25 +374,25 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   detailLabel: {
-    color: '#94A3B8',
+    color: '#A1A1AA',
     fontSize: 12,
   },
   detailValue: {
-    color: '#F8FAFC',
+    color: '#FFFFFF',
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: '900',
     fontFamily: 'monospace',
   },
   doneBtn: {
-    backgroundColor: '#2563EB',
+    backgroundColor: '#FACC15',
     width: '100%',
-    paddingVertical: 12,
+    paddingVertical: 14,
     borderRadius: 10,
     alignItems: 'center',
   },
   doneBtnText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
+    color: '#000000',
+    fontWeight: '900',
     fontSize: 14,
   },
 });

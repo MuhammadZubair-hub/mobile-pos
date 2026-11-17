@@ -14,7 +14,7 @@ import { useCart } from '../context/CartContext';
 import { ProductItem } from '../components/ProductItem';
 import { CartModal } from '../components/CartModal';
 import { CheckoutModal } from '../components/CheckoutModal';
-import { Product, Order } from '../types';
+import { Order } from '../types';
 
 export const POSScreen: React.FC = () => {
   const { products, categories, isConnected, refreshProducts } = useServer();
@@ -57,8 +57,8 @@ export const POSScreen: React.FC = () => {
       <View style={styles.searchBar}>
         <TextInput
           style={styles.searchInput}
-          placeholder="Search products, SKU or barcode..."
-          placeholderTextColor="#64748B"
+          placeholder="Search Octopizza menu..."
+          placeholderTextColor="#71717A"
           value={search}
           onChangeText={setSearch}
         />
@@ -83,13 +83,14 @@ export const POSScreen: React.FC = () => {
 
           {categories.map((c) => {
             const count = products.filter((p) => p.category_id === c.id).length;
+            const isSelected = selectedCat === c.id;
             return (
               <TouchableOpacity
                 key={c.id}
-                style={[styles.catPill, selectedCat === c.id && styles.catPillActive]}
+                style={[styles.catPill, isSelected && styles.catPillActive]}
                 onPress={() => setSelectedCat(c.id)}
               >
-                <Text style={[styles.catText, selectedCat === c.id && styles.catTextActive]}>
+                <Text style={[styles.catText, isSelected && styles.catTextActive]}>
                   {c.name} ({count})
                 </Text>
               </TouchableOpacity>
@@ -107,17 +108,17 @@ export const POSScreen: React.FC = () => {
         )}
         contentContainerStyle={styles.listContent}
         refreshControl={
-          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} tintColor="#3B82F6" />
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} tintColor="#FACC15" />
         }
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyTitle}>
-              {!isConnected ? 'Not Connected to Desktop Host' : 'No Products Found'}
+              {!isConnected ? 'Not Connected to Desktop Host' : 'No Items Found'}
             </Text>
             <Text style={styles.emptySub}>
               {!isConnected
-                ? 'Go to Wi-Fi Setup tab to connect to your Desktop POS Terminal.'
-                : 'Try clearing your search or category filter.'}
+                ? 'Go to Wi-Fi Sync tab to connect to your Desktop POS Terminal.'
+                : 'Try searching for pizza, zinger, or pasta.'}
             </Text>
           </View>
         }
@@ -133,7 +134,7 @@ export const POSScreen: React.FC = () => {
           <View style={styles.cartBadge}>
             <Text style={styles.cartBadgeText}>{itemCount}</Text>
           </View>
-          <Text style={styles.floatingCartText}>View Cart & Checkout</Text>
+          <Text style={styles.floatingCartText}>View Order Cart</Text>
           <Text style={styles.floatingTotal}>Rs. {total.toFixed(0)}</Text>
         </TouchableOpacity>
       )}
@@ -161,20 +162,20 @@ export const POSScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0B1120',
+    backgroundColor: '#0A0A0A',
   },
   searchBar: {
-    backgroundColor: '#0F172A',
+    backgroundColor: '#121212',
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#1E293B',
+    borderBottomColor: '#262626',
     position: 'relative',
   },
   searchInput: {
-    backgroundColor: '#1E293B',
+    backgroundColor: '#1A1A1A',
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#333333',
     borderRadius: 10,
     color: '#FFFFFF',
     paddingHorizontal: 12,
@@ -187,13 +188,13 @@ const styles = StyleSheet.create({
     top: 18,
   },
   clearSearchText: {
-    color: '#94A3B8',
+    color: '#A1A1AA',
     fontSize: 14,
   },
   categoryContainer: {
-    backgroundColor: '#0F172A',
+    backgroundColor: '#101010',
     borderBottomWidth: 1,
-    borderBottomColor: '#1E293B',
+    borderBottomColor: '#262626',
   },
   categoryContent: {
     paddingHorizontal: 16,
@@ -201,24 +202,25 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   catPill: {
-    backgroundColor: '#1E293B',
+    backgroundColor: '#181818',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: '#2D2D2D',
   },
   catPillActive: {
-    backgroundColor: '#2563EB',
-    borderColor: '#3B82F6',
+    backgroundColor: '#FACC15',
+    borderColor: '#FACC15',
   },
   catText: {
-    color: '#94A3B8',
+    color: '#A1A1AA',
     fontSize: 11,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   catTextActive: {
-    color: '#FFFFFF',
+    color: '#000000',
+    fontWeight: '900',
   },
   listContent: {
     paddingVertical: 10,
@@ -229,13 +231,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyTitle: {
-    color: '#94A3B8',
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   emptySub: {
-    color: '#64748B',
+    color: '#71717A',
     fontSize: 12,
     marginTop: 6,
     textAlign: 'center',
@@ -246,21 +248,21 @@ const styles = StyleSheet.create({
     bottom: 20,
     left: 16,
     right: 16,
-    backgroundColor: '#2563EB',
+    backgroundColor: '#FACC15',
     borderRadius: 16,
     paddingVertical: 14,
     paddingHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    shadowColor: '#2563EB',
+    shadowColor: '#FACC15',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.4,
+    shadowOpacity: 0.3,
     shadowRadius: 10,
     elevation: 8,
   },
   cartBadge: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#000000',
     width: 24,
     height: 24,
     borderRadius: 12,
@@ -268,18 +270,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cartBadgeText: {
-    color: '#2563EB',
-    fontWeight: 'bold',
+    color: '#FACC15',
+    fontWeight: '900',
     fontSize: 12,
   },
   floatingCartText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
+    color: '#000000',
+    fontWeight: '900',
     fontSize: 14,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   floatingTotal: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
+    color: '#000000',
+    fontWeight: '900',
     fontSize: 16,
     fontFamily: 'monospace',
   },
