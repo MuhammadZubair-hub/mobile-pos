@@ -8,6 +8,7 @@ import {
   ScrollView,
   ActivityIndicator,
   Alert,
+  Image,
 } from 'react-native';
 import { useServer } from '../context/ServerContext';
 
@@ -50,11 +51,16 @@ export const DiscoveryScreen: React.FC = () => {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      {/* Title */}
+      {/* Logo & Title */}
       <View style={styles.header}>
-        <Text style={styles.title}>Wi-Fi Desktop Connect</Text>
+        <Image
+          source={require('../assets/images/logo.png')}
+          style={styles.brandLogo}
+          resizeMode="contain"
+        />
+        <Text style={styles.title}>OCTOPIZZA'S POS</Text>
         <Text style={styles.subtitle}>
-          Auto-discover your POS terminal on local Wi-Fi or enter LAN IP manually.
+          Wi-Fi Mobile Companion • Auto-discover POS Host or enter LAN IP manually.
         </Text>
       </View>
 
@@ -192,16 +198,25 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 16,
+    alignItems: 'center',
+  },
+  brandLogo: {
+    width: 72,
+    height: 72,
+    marginBottom: 10,
+    borderRadius: 16,
   },
   title: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: '900',
     color: '#FFFFFF',
+    textAlign: 'center',
   },
   subtitle: {
     fontSize: 12,
     color: '#A1A1AA',
     marginTop: 4,
+    textAlign: 'center',
   },
   connectedCard: {
     backgroundColor: 'rgba(250, 204, 21, 0.08)',
