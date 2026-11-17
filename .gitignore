@@ -1,0 +1,15 @@
+node_modules/
+.metro/
+.expo/
+*.log
+android/app/build/
+android/build/
+android/.gradle/
+*.apk
+*.aab
+ios/build/
+ios/Pods/
+.DS_Store
+Thumbs.db
+.env
+.env.local
