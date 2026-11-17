@@ -35,7 +35,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({ product, onAdd }) => {
       </View>
 
       <View style={styles.actionCol}>
-        <Text style={styles.price}>${product.price.toFixed(2)}</Text>
+        <Text style={styles.price}>Rs. {product.price.toFixed(0)}</Text>
         <TouchableOpacity
           style={[styles.addButton, isOutOfStock && styles.addButtonDisabled]}
           disabled={isOutOfStock}

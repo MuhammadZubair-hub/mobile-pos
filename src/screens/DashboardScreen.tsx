@@ -52,7 +52,7 @@ export const DashboardScreen: React.FC = () => {
           <Text style={styles.itemCount}>
             {item.items?.reduce((s, i) => s + i.qty, 0) || 0} items
           </Text>
-          <Text style={styles.orderTotal}>${item.total.toFixed(2)}</Text>
+          <Text style={styles.orderTotal}>Rs. {item.total.toFixed(0)}</Text>
         </View>
       </View>
     );
@@ -73,10 +73,10 @@ export const DashboardScreen: React.FC = () => {
         <View style={styles.kpiCard}>
           <Text style={styles.kpiLabel}>Today's Sales</Text>
           <Text style={styles.kpiValue}>
-            ${(salesSummary?.totalRevenue || 0).toFixed(2)}
+            Rs. {(salesSummary?.totalRevenue || 0).toFixed(0)}
           </Text>
           <Text style={styles.kpiSub}>
-            Avg: ${(salesSummary?.averageOrderValue || 0).toFixed(2)}
+            Avg: Rs. {(salesSummary?.averageOrderValue || 0).toFixed(0)}
           </Text>
         </View>
 
@@ -96,13 +96,13 @@ export const DashboardScreen: React.FC = () => {
         <View style={styles.breakdownItem}>
           <Text style={styles.breakdownLabel}>💵 Cash Sales:</Text>
           <Text style={styles.breakdownVal}>
-            ${(salesSummary?.cashRevenue || 0).toFixed(2)}
+            Rs. {(salesSummary?.cashRevenue || 0).toFixed(0)}
           </Text>
         </View>
         <View style={styles.breakdownItem}>
           <Text style={styles.breakdownLabel}>💳 Card Sales:</Text>
           <Text style={styles.breakdownVal}>
-            ${(salesSummary?.cardRevenue || 0).toFixed(2)}
+            Rs. {(salesSummary?.cardRevenue || 0).toFixed(0)}
           </Text>
         </View>
       </View>

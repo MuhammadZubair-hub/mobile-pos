@@ -134,7 +134,7 @@ export const POSScreen: React.FC = () => {
             <Text style={styles.cartBadgeText}>{itemCount}</Text>
           </View>
           <Text style={styles.floatingCartText}>View Cart & Checkout</Text>
-          <Text style={styles.floatingTotal}>${total.toFixed(2)}</Text>
+          <Text style={styles.floatingTotal}>Rs. {total.toFixed(0)}</Text>
         </TouchableOpacity>
       )}
 

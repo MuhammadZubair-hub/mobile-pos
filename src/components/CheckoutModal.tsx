@@ -39,7 +39,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
   const handleSubmit = async () => {
     if (!isSufficient) {
-      Alert.alert('Insufficient Tender', `Tendered amount must be at least $${total.toFixed(2)}`);
+      Alert.alert('Insufficient Tender', `Tendered amount must be at least Rs. ${total.toFixed(0)}`);
       return;
     }
 
@@ -94,7 +94,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               <View style={styles.successDetails}>
                 <View style={styles.row}>
                   <Text style={styles.detailLabel}>Total Paid:</Text>
-                  <Text style={styles.detailValue}>${completedOrder.total.toFixed(2)}</Text>
+                  <Text style={styles.detailValue}>Rs. {completedOrder.total.toFixed(0)}</Text>
                 </View>
                 <View style={styles.row}>
                   <Text style={styles.detailLabel}>Payment Method:</Text>
@@ -104,7 +104,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   <View style={styles.row}>
                     <Text style={styles.detailLabel}>Change Due:</Text>
                     <Text style={[styles.detailValue, { color: '#34D399' }]}>
-                      ${changeDue.toFixed(2)}
+                      Rs. {changeDue.toFixed(0)}
                     </Text>
                   </View>
                 )}
@@ -126,7 +126,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
               <View style={styles.amountBox}>
                 <Text style={styles.amountLabel}>Total Due</Text>
-                <Text style={styles.amountVal}>${total.toFixed(2)}</Text>
+                <Text style={styles.amountVal}>Rs. {total.toFixed(0)}</Text>
               </View>
 
               {/* Payment Method Selector */}
@@ -145,18 +145,18 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                   onPress={() => setPaymentMethod('CARD')}
                 >
                   <Text style={[styles.methodText, paymentMethod === 'CARD' && styles.methodTextActive]}>
-                    💳 Card
+                    💳 Card / Online
                   </Text>
                 </TouchableOpacity>
               </View>
 
               {paymentMethod === 'CASH' && (
                 <View style={styles.cashBox}>
-                  <Text style={styles.inputLabel}>Tendered Cash ($)</Text>
+                  <Text style={styles.inputLabel}>Tendered Cash (Rs.)</Text>
                   <TextInput
                     style={styles.input}
                     keyboardType="decimal-pad"
-                    placeholder={total.toFixed(2)}
+                    placeholder={total.toFixed(0)}
                     placeholderTextColor="#64748B"
                     value={tenderedInput}
                     onChangeText={setTenderedInput}
@@ -164,7 +164,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
                   <View style={styles.changeRow}>
                     <Text style={styles.changeLabel}>Change Due:</Text>
-                    <Text style={styles.changeVal}>${changeDue.toFixed(2)}</Text>
+                    <Text style={styles.changeVal}>Rs. {changeDue.toFixed(0)}</Text>
                   </View>
                 </View>
               )}

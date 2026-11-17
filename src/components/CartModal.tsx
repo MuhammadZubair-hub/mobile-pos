@@ -62,7 +62,7 @@ export const CartModal: React.FC<CartModalProps> = ({
                     <Text style={styles.itemName} numberOfLines={1}>
                       {item.product.name}
                     </Text>
-                    <Text style={styles.itemUnit}>${item.unitPrice.toFixed(2)} each</Text>
+                    <Text style={styles.itemUnit}>Rs. {item.unitPrice.toFixed(0)} each</Text>
                   </View>
 
                   <View style={styles.qtyRow}>
@@ -84,7 +84,7 @@ export const CartModal: React.FC<CartModalProps> = ({
                   </View>
 
                   <Text style={styles.lineTotal}>
-                    ${(item.unitPrice * item.qty).toFixed(2)}
+                    Rs. {(item.unitPrice * item.qty).toFixed(0)}
                   </Text>
                 </View>
               ))
@@ -96,19 +96,21 @@ export const CartModal: React.FC<CartModalProps> = ({
             <View style={styles.footer}>
               <View style={styles.summaryRow}>
                 <Text style={styles.summaryLabel}>Subtotal</Text>
-                <Text style={styles.summaryVal}>${subtotal.toFixed(2)}</Text>
+                <Text style={styles.summaryVal}>Rs. {subtotal.toFixed(0)}</Text>
               </View>
-              <View style={styles.summaryRow}>
-                <Text style={styles.summaryLabel}>Estimated Tax (8.5%)</Text>
-                <Text style={styles.summaryVal}>+${taxAmount.toFixed(2)}</Text>
-              </View>
+              {taxAmount > 0 && (
+                <View style={styles.summaryRow}>
+                  <Text style={styles.summaryLabel}>Estimated Tax</Text>
+                  <Text style={styles.summaryVal}>+Rs. {taxAmount.toFixed(0)}</Text>
+                </View>
+              )}
               <View style={[styles.summaryRow, styles.totalRow]}>
                 <Text style={styles.totalLabel}>Total Due</Text>
-                <Text style={styles.totalVal}>${total.toFixed(2)}</Text>
+                <Text style={styles.totalVal}>Rs. {total.toFixed(0)}</Text>
               </View>
 
               <TouchableOpacity style={styles.checkoutBtn} onPress={onProceedCheckout}>
-                <Text style={styles.checkoutBtnText}>Checkout (${total.toFixed(2)})</Text>
+                <Text style={styles.checkoutBtnText}>Checkout (Rs. {total.toFixed(0)})</Text>
               </TouchableOpacity>
             </View>
           )}
